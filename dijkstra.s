@@ -1,6 +1,3 @@
-// Implementation of Dijkstra's algorithm
-// Wikipedia link : https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-//
 // This program was built to work on an ARMv7 architecture with a ARMv7 DE1-Soc system.
 //
 // Lukas Laudrain.
@@ -43,6 +40,10 @@
 //          5,  6,  7,  8,     <===> [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 //          9,  10, 11, 12,
 //          13, 14, 15, 16]
+//
+// 4. So as to get the path from a node to the source, you need to look at the values of the list stored
+//    in the memory at the address stored in r1. If the value is 0xffffffff that means, there are no
+//    previous value. The values represent the indexes of the previous nodes.
 
 .equ el_count, 4
 
@@ -53,6 +54,7 @@ _start:
 	// R12 {word}             - The amount of nodes in the matrix 
 	//
 	// R0 {Array<el_count^2>} - Matrix (list) containing the values of the edges of the matrix
+	// R1 {Array<el_count>}   - List containing the index of the previous node 
 	// R2 {Array<el_count>}   - List containing whether the node at index i is visited or not (1 for visited, 0 for not)
 	// R4 {Array<el_count>}   - List containing the distance from the source node to each node
 
